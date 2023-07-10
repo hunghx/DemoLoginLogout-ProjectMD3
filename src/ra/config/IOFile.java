@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IOFile<T> {
-    public  static final String CATALOG_PATH = "C:\\Users\\hung1\\OneDrive\\Desktop\\ProjectMD3-PTJV1\\src\\ra\\data\\catalog";
+    public  static final String CATALOG_PATH = "C:\\Users\\hung1\\OneDrive\\Desktop\\ProjectMD3-JV01\\src\\ra\\data\\catalogs.txt";
     public  static final String USER_PATH = "C:\\Users\\hung1\\OneDrive\\Desktop\\ProjectMD3-JV01\\src\\ra\\data\\users.txt";
 
     public  static final String PRODUCT_PATH = "C:\\Users\\hung1\\OneDrive\\Desktop\\ProjectMD3-PTJV1\\src\\ra\\data\\product";

@@ -46,15 +46,7 @@ public class UserService implements IGenericSevice<User,Integer> {
         }
         return  null;
     }
-    public User login(String username, String password){
-        for (User u:listUser
-             ) {
-            if(u.getUsername().equals(username)&& u.getPassword().equals(password)){
-                return u;
-            }
-        }
-        return  null;
-    }
+
     public int getNewId(){
         int max=0;
         for (User u :listUser) {
@@ -63,6 +55,15 @@ public class UserService implements IGenericSevice<User,Integer> {
             }
         }
         return max+1;
+    }
+    public User login(String username, String password){
+        for (User u:listUser
+        ) {
+            if(u.getUsername().equals(username)&& u.getPassword().equals(password)){
+                return u;
+            }
+        }
+        return  null;
     }
     public boolean checkExistUserName(String username){
         for (User u :listUser) {

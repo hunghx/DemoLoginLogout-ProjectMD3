@@ -1,15 +1,19 @@
 package ra.run;
 
 import ra.config.InputMethods;
+import ra.controller.CatalogController;
 import ra.controller.UserController;
+import ra.model.Catalog;
 import ra.model.User;
 
 public class ShopManagement {
     private static User user;
     private static UserController userController;
+    private static CatalogController catalogController;
 
     public static void main(String[] args) {
         userController = new UserController();
+        catalogController = new CatalogController();
         while (true) {
             System.out.println("----------------menu---------------");
             System.out.println("1. Login");
@@ -120,6 +124,121 @@ public class ShopManagement {
     public static void menuAdmin() {
         System.out.println("Welcome to back shop, " + user.getUsername());
         InputMethods.pressAnyKey();
+        while (true) {
+            System.out.println("==========Menu Admin=============");
+            System.out.println("1. Quản lí tài khoản ");
+            System.out.println("2. Quản lí danh mục");
+            System.out.println("3. Quản lí sản phẩm");
+            System.out.println("0. Đăng xuất");
+            System.out.println("Nhập vao lựa chọn");
+            int choice = InputMethods.getInteger();
+            switch (choice) {
+                case 1:
+                    // quản lí tài khaoanr
+                    break;
+                case 2:
+                    // quản lí danh mục
+                    menuCatalog();
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.err.println("Nhập sai , nhập lại");
+            }
+            if (choice == 0) {
+                break;
+            }
+        }
     }
 
+    public static void menuCatalog() {
+        while (true) {
+            System.out.println("==========Menu Catalog=============");
+            System.out.println("1. Hiển thị danh sách danh mục ");
+            System.out.println("2. Thêm mới danh mục");
+            System.out.println("3. Chỉnh sửa thông");
+            System.out.println("4. Khoa/Mo danh mục");
+            System.out.println("0. Quay lại");
+            System.out.println("Nhập vao lựa chọn");
+            int choice = InputMethods.getInteger();
+            switch (choice) {
+                case 1:
+                    // danhh sách
+                    displayAllCatalog();
+                    break;
+                case 2:
+                    // thêm mới
+                    createNewCatalog();
+                    break;
+                case 3:
+                    // cập nhật
+                    updateCatalog();
+                    break;
+                case 4:
+//                       xóa
+                    deleteCatalog();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.err.println("Nhập sai , nhập lại");
+            }
+            if (choice == 0) {
+                break;
+            }
+        }
+    }
+    // hieenr thi
+    public static void displayAllCatalog(){
+        if(catalogController.findAll().isEmpty()){
+            System.out.println("Danh sacsh trong");
+            return;
+        }
+        for (Catalog cat:catalogController.findAll()) {
+            System.out.println(cat);
+        }
+    }
+    // theem mowis
+    public static void createNewCatalog(){
+        Catalog newCatalog =new Catalog();
+        int idNew = catalogController.getNewId();
+        System.out.println("ID New : "+idNew);
+        newCatalog.setId(idNew);
+        System.out.println("Nhập tên danh mục");
+        newCatalog.setName(InputMethods.getString());
+        // lưuu vào file
+        catalogController.save(newCatalog);
+    }
+    public static void updateCatalog(){
+        System.out.println("Nhập vào id của danh mục cần sửa");
+        int idEdit = InputMethods.getInteger();
+        Catalog editCatalog =catalogController.findById(idEdit);
+        if(editCatalog==null){
+            System.err.println("Không tôn tại id");
+            return;
+        }
+        // cho phép sửa  thông tin
+        System.out.println("Nhập tên danh mục mới");
+        editCatalog.setName(InputMethods.getString());
+        // lưuu vào file
+        catalogController.save(editCatalog);
+    }
+    // xóa
+    public static void deleteCatalog() {
+        System.out.println("Nhập vào id của danh mục cần xóa");
+        int idDel = InputMethods.getInteger();
+        Catalog deleteCatalog = catalogController.findById(idDel);
+        if (deleteCatalog == null) {
+            System.err.println("Không tôn tại id");
+            return;
+        }
+        // cho phép xóa
+        // xóa luôn
+//        catalogController.delete(idDel);
+        // thay đổi trạng thái
+        deleteCatalog.setStatus(!deleteCatalog.isStatus());
+        catalogController.save(deleteCatalog);
+    }
 }
